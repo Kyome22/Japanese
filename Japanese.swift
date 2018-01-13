@@ -119,6 +119,11 @@ class Japanese {
 			case "w": return threeW(str)
 			default:
 				switch str {
+				case "tsa": return "ツァ"
+				case "tsi": return "ツィ"
+				case "tsu": return "ツ"
+				case "tse": return "ツェ"
+				case "tso": return "ツォ"
 				case "xka", "lka": return "ヵ"
 				case "xke", "lke": return "ヶ"
 				case "xtu", "ltu": return "ッ"
