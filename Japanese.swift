@@ -13,7 +13,7 @@ class Japanese {
 	private func transliterateString(source: String, transform: CFString, reverse: Bool) -> String {
 		let string = CFStringCreateMutableCopy(kCFAllocatorDefault, 0, source as CFString)
 		if CFStringTransform(string, nil, transform, reverse) {
-			return String(describing: string!)
+			return String(describing: string)
 		} else {
 			return source
 		}
@@ -86,8 +86,9 @@ class Japanese {
 		case "ny": return str
 		case "n'", "nn": return "ン"
 		default:
-			if str.first! == "n" {
-				return "ン" + String(str.last!)
+            guard let first = str.first, let last = str.last else { return str }
+            if first == "n" {
+                return "ン" + String(last)
 			} else {
 				return str
 			}
@@ -95,12 +96,13 @@ class Japanese {
 	}
 
 	func xtuCheck(_ str: String) -> String {
-		if isRoman(str.first!) && str.first! == str.last! {
-			let f = str.first!
+        guard let first = str.first, let last = str.last else { return str }
+        if isRoman(first) && first == last {
+            let f = first
 			if f == "a" || f == "i" || f == "u" || f == "e" || f == "o" {
 				return str
 			} else {
-				return "ッ" + String(str.last!)
+				return "ッ" + String(last)
 			}
 		}
 		return str
@@ -113,7 +115,8 @@ class Japanese {
 		case 2:
 			return two(str)
 		case 3:
-			switch str.dropFirst().first! {
+            guard let first = str.dropFirst().first else { return str }
+            switch first {
 			case "y": return threeY(str)
 			case "h": return threeH(str)
 			case "w": return threeW(str)
@@ -264,7 +267,8 @@ class Japanese {
 			default: return str
 			}
 		}
-		switch str.first! {
+        guard let first = str.first else { return str }
+		switch first {
 		case "b": return yaiueo(head: "ビ", str: String(str.dropFirst()))
 		case "c": return yaiueo(head: "チ", str: String(str.dropFirst()))
 		case "d": return yaiueo(head: "ヂ", str: String(str.dropFirst()))
